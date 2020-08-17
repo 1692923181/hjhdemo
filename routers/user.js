@@ -42,12 +42,6 @@ router.post('/store',(req,res)=>{
                 res.send("注册失败")
             })
         }
-    })
-
-
-    
-    
+    }) 
 })
-
-
 module.exports = router
