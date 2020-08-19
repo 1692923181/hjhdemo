@@ -1,6 +1,7 @@
 const express =require('express')
 const UserModel =require("../model/user")
 const router =express.Router()
+const bcryptjs = require('bcryptjs')
 
 //注册页面路由
 router.get('/create',(req,res)=>{
@@ -28,9 +29,47 @@ router.post('/store',async(req,res)=>{
     if(data){
         res.send("邮箱已经被注册了")
     }else{
-        let user =new UserModel(req.body)
-        user.save()
+        let user =new UserModel({
+            username:req.body.username,
+            email:req.body.email,
+            password:bcryptjs.hashSync(req.body.password),
+        })
+        await user.save()
         res.send("注册成功")
     }
 })
-module.exports = router
+
+//登录页面
+router.get("/login", (req, res) => {
+    res.render("login");
+  });
+
+//登录操作
+router.post("/login", async (req, res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+  
+    if (!email || !password) {
+      res.send("参数有错误");
+      return;
+    }
+//由于数据库的密码加密了，不要直接用两个数据去做查询
+let user = await UserModel.findOne({ email: email });
+  if (!user) {
+    res.send("用户名或密码错误");
+    return;
+  }
+
+  console.log(user);
+
+  //密码效验 
+  let isOk = bcryptjs.compareSync(password, user.password);
+  if (!isOk) {
+    res.send("用户名或密码错误");
+    return;
+  }
+    res.redirect("/posts")
+})
+  
+
+module.exports = router 

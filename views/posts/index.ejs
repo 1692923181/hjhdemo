@@ -1,0 +1,40 @@
+<!--文章列表页面-->
+
+<%- include('../layouts/hrader.ejs')%>
+
+<div class="container my-5">
+    <div class="list-group list-group-flush">
+      
+      <% for(var i =0;i<list.length;i++){ %>
+     
+        <div class="list-group-item flex-column align-items-start py-3">
+            <div class="d-flex justify-content-between">
+              <a class="text-dark w-75" href="/posts/<%= list[i]._id%>">
+                <h6><%= list[i].title %></h6>
+              </a>
+              <small class="text-black-50 text-right"><%= list[i].updatedAt %></small>
+            </div>
+            <div class="font-weight-light text-truncate"><%= list[i].content %></div>
+
+          </div>    
+      <% } %>
+    </div>
+  <!-- 分页 -->
+  <nav class="my-5">
+    <ul class="pagination">
+      <li class="page-item">
+          <a class="page-link" href="/posts?pageNum=<%= pageNum===1?1:pageNum-1%>">Previous</a>
+    </li>
+      <% for(var i = 1; i<=total;i++){ %>
+        <li class="page-item <%= pageNum === i ? 'active' : '' %>">
+            <a class="page-link" href="/posts?pageNum=<%= i %>"><%= i%></a>
+        </li>
+      <%}%>
+      
+      
+      <li class="page-item"><a class="page-link" href="/posts?pageNum=<%= pageNum===total?total:pageNum+1%>">Next</a></li>
+    </ul>
+  </nav>
+
+  
+<%- include('../layouts/footer.ejs')%>

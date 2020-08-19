@@ -1,0 +1,63 @@
+<!--文章新增页面-->
+
+<%- include('../layouts/header.ejs')%>
+<div class="container my-5">
+    <h3 class="mt-5 mb-4">Add New Post</h3>
+    <form action="/posts/store" method="POST">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          name="title"
+          value=""
+          placeholder="Enter title here"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="content">Content</label>
+        <textarea
+          class="form-control"
+          name="content"
+          rows="8"
+          cols="80"
+          placeholder="Write something amazing"
+        ></textarea>
+      </div>
+
+      <!-- <div class="form-group">
+        <div class="row">
+          <div class="col-sm-1">
+            <span class="px-3 text-muted"><i class="fas fa-tags"></i></span>
+          </div>
+          <div class="col-sm-11">
+            <div class="form-check form-check-inline">
+              <input
+                type="checkbox"
+                name="tags"
+                value="1"
+                id="tags-1"
+                class="form-check-input"
+              />
+              <label for="tags-1" class="form-check-label">工作</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                type="checkbox"
+                name="tags"
+                value="2"
+                id="tags-2"
+                class="form-check-input"
+              />
+              <label for="tags-2" class="form-check-label">生活</label>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+  </div>
+
+<%- include('../layouts/footer.ejs')%>
