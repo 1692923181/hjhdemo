@@ -1,12 +1,25 @@
 const express =require('express')
 const cookieParser = require('cookie-parser')
 const app = express()
+const session = require("express-session")
 const userRouter = require('./routers/user')
 const postRouter = require('./routers/post')
 
 //模板引擎
 app.set('views','views')
 app.set('view engine','ejs')
+
+
+//session处理
+app.use(session({
+    secret:"Hello world",
+    resave:true,
+    saveUninitialized:true,
+    cookie:{
+        maxAge:1000*60*60*2
+    }
+    
+}))
 
 //静态资源托管
 app.use(express.static('public'))

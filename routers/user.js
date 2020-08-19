@@ -68,7 +68,10 @@ let user = await UserModel.findOne({ email: email });
     res.send("用户名或密码错误");
     return;
   }
-    res.redirect("/posts")
+  //登录成功
+  //给session加点内容
+  req.session.user = user;
+  res.redirect("/posts")
 })
   
 
