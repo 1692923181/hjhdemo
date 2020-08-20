@@ -74,6 +74,13 @@ let user = await UserModel.findOne({ email: email });
   req.session.user = user;
   res.redirect(redirect)
 })
-  
+//退出登录
+router.post("/logout",(req,res)=>{
+  //session清除
+  req.session.destroy()
+  res.redirect("/users/login")
+
+
+})  
 
 module.exports = router 

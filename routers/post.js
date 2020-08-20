@@ -9,10 +9,6 @@ router.get('/',auth(),async(req,res)=>{
             res.send('没有登录')
             return;
         }
-
-
-
-
     //从url地址上获得当前的是第几页，每页要多少条
     let pageNum = parseInt(req.query.pageNum) || 1;
     let pageSize = parseInt(req.query.pageSize) ||5;
@@ -25,11 +21,11 @@ router.get('/',auth(),async(req,res)=>{
     .sort({updatedAt:-1})
     .skip((pageNum - 1)*pageSize)
     .limit(pageSize);
-
     res.render('posts/index',{
         list:list,
         total:total,
         pageNum:pageNum,
+        user:req.session.user
     });
 
 
@@ -37,7 +33,9 @@ router.get('/',auth(),async(req,res)=>{
 
 //新增文章页面
 router.get('/create',auth(),(req,res)=>{
-    res.render('posts/create');
+    res.render('posts/create',{
+        user:req.session.user
+    });
 })
 //文章详情
 router.get('/:id',auth(),async(req,res)=>{
@@ -48,7 +46,7 @@ router.get('/:id',auth(),async(req,res)=>{
     let data = await PostModel.findById(id);
     //3.渲染页面
     res.render('posts/show',{
-        postInfo:data
+        postInfo:data,user:req.session.user
     })
 })
 
@@ -75,6 +73,7 @@ router.get('/:id/edit',auth(),async(req,res)=>{
         id:post._id,
         title:post.title,
         content:post.content,
+        user:req.session.user
     })
 })
 
